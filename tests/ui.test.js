@@ -27,5 +27,20 @@ test("Verify All books links is visible after login", async ({ page }) => {
     await page.fill('input[name="password"]', '123456');
     await page.click('input[type="submit"]');
 
+    const allBooksLink = await page.$('a[href="/catalog"]');
+    const allBooksLinkVisible = await allBooksLink.isVisible();
+
+    expect(allBooksLinkVisible).toBe(true);
+}); 
+
+test("Login with valid credentials", async ({ page }) => {
+    await page.goto('http://localhost:3001/login');
+
+    await page.fill('input[name="email"]', 'peter@abv.bg');
+    await page.fill('input[name="password"]', '123456');
+    await page.click('input[type="submit"]');
+
+    await page.$('a[href="/catalog"]');
    
+    expect(page.url()).toBe('http://localhost:3001/catalog');
 }); 
